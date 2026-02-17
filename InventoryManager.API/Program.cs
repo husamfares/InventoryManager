@@ -1,5 +1,6 @@
+using System.Runtime.CompilerServices;
+using InventoryManager.Application.Interfaces;
 using InventoryManager.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,17 +18,28 @@ builder.Services.AddCors(options =>
     });
 });
 
-// EF Core + SQLite
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Swagger (optional)
+// Swagger services
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+//Dependency Enjection
+builder.Services.AddScoped<IProductRepository,ProductRepository>();
+
+
 
 var app = builder.Build();
 
+//swagger
+if(app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+
 // Middleware pipeline
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseCors("AllowAngularApp");  
 app.UseAuthorization();
 app.MapControllers();

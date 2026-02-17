@@ -1,22 +1,20 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Domain.Entities;
+namespace InventoryManager.Domain.Entities;
 
 public class Product
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
-    public string NameOfProduct { get; set; } = string.Empty;
-
-    public string Description { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     public decimal Price { get; set; }
 
-    public int Quantity { get; set; }
+    public int StockQuantity {get; set;}
 
-    //public int CategoryId { get; set; }
+    public DateTimeOffset CreatedAt {get; set;}
 
-    // public Category Category { get; set; }
+    public DateTimeOffset UpdatedAt {get; set;}
 
 
 
